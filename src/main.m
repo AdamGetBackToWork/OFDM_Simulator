@@ -13,13 +13,27 @@ addpath("lib/tx");
 addpath("lib/rx");
 addpath("lib/channel");
 addpath("utils/");
-
+    
 %% ========================================================================
 % OFDM Simulation - Transmitter 
 % =========================================================================
 
-% Load the payload
-payload = get_payload(config);
+% Load the payload - ADAM
+payload = get_payload_tx(config);
+
+% QAM modulator  - KAMIL
+
+% Insert subcarriers - PIOTR
+
+% Upsampling - PIOTR
+
+% IFFT with shift (ifft(fftshift());) - KAMIL
+
+% Add Guard Inverval  - PIOTR
+
+% insert pilots - pilot symbols - KAMIL
+
+% Build OFDM frame - join data and pilots - ADAM
 
 
 %% ========================================================================
@@ -39,5 +53,30 @@ payload = get_payload(config);
 % OFDM Simulation - Receiver 
 % =========================================================================
 
+% detect frame start - ADAM
+frame_start = detect_frame_start(config, signal);
+
+% estimate frequency offset - ADAM
+
+% compensate frequency offset - ADAM
+
+% extract OFDM symbols - KAMIL
+
+% remove GI - PIOTR
+
+% OFDM demodulator  - ADAM
+
+% extract subcarriers - KAMIL
+
+% estimate channel - PIOTR
+
+% interpolate channel - PIOTR
+
+% equalize symbols - KAMIL
+
+% qam demodulator - KAMIL
+
+% get payload back - ADAM
+% get_payload_rx
 
 
