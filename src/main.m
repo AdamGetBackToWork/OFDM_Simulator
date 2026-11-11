@@ -19,9 +19,12 @@ addpath("utils/");
 % =========================================================================
 
 % Load the payload - ADAM
-payload = get_payload_tx(config);
+[payload, config] = get_payload_tx(config);
 
-% QAM modulator  - KAMIL
+% Divide the bitstream into groups of bits for QAM modulation - KAMIL
+% payload = split_payload(payload, config);
+
+% QAM modulator (can be one with previous) - KAMIL
 
 % Insert subcarriers - PIOTR
 
@@ -53,12 +56,14 @@ payload = get_payload_tx(config);
 % OFDM Simulation - Receiver 
 % =========================================================================
 
-% detect frame start - ADAM
-frame_start = detect_frame_start(config, signal);
-
-% estimate frequency offset - ADAM
-
-% compensate frequency offset - ADAM
+% % Detect frame start - ADAM
+% [frame_start, corr_vals] = detect_frame_start(config, signal);
+% 
+% % Estimate frequency offset - ADAM
+% ferror = estimate_frequency_offset(config, corr_vals, frame_start);
+% 
+% % Compensate frequency offset - ADAM
+% signal = compensate_frequency_offset(config, signal, ferror);
 
 % extract OFDM symbols - KAMIL
 
@@ -77,6 +82,6 @@ frame_start = detect_frame_start(config, signal);
 % qam demodulator - KAMIL
 
 % get payload back - ADAM
-% get_payload_rx
+get_payload_rx(config, payload);
 
 

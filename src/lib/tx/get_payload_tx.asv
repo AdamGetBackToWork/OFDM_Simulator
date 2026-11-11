@@ -1,0 +1,37 @@
+% =========================================================================
+% Function name: get_payload_tx
+% Author: Adam
+% Creation date: 2026-11-10
+% Last modified: 2026-11-11
+%
+% Description:
+% This function creates the payload to be sent. ASCII art is selected and
+% translated to bits, th
+%
+% Inputs:
+%   config - configuration structure (here only payload_img selector is 
+%   accessed)
+%
+% Outputs:
+%   data - data structure containing: image in chars, size M, size N
+%
+% Notes:
+%   Current version assumes static available payloads, but can be called
+%   numerous times to construct a bigger payload data
+% =========================================================================
+
+function payload = get_payload_tx(config)
+
+% Choose an ASCII art to be transmitted
+data = get_data(config);
+
+% Convert the ASCII art to bits
+data = data_to_bits(data);
+
+% Form payload
+payload = form_payload(config, data);
+
+% Scrambler
+payload = scramble_payload(config, payload);
+
+end
