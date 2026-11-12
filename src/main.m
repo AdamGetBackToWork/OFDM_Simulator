@@ -19,25 +19,27 @@ addpath("utils/");
 % =========================================================================
 
 % Load the payload - ADAM
-[payload, config] = get_payload_tx(config);
+% [payload, config] = get_payload_tx(config);
 
 % Divide the bitstream into groups of bits for QAM modulation - KAMIL
 % payload = split_payload(payload, config);
 
 % QAM modulator (can be one with previous) - KAMIL
 
-% Insert subcarriers - PIOTR
+% =======================================
 
-% Upsampling - PIOTR
+% Insert subcarriers - KAMIL
+
+% Upsampling - KAMIL
 
 % IFFT with shift (ifft(fftshift());) - KAMIL
 
-% Add Guard Inverval  - PIOTR
+% Add Guard Inverval  - KAMIL
 
 % insert pilots - pilot symbols - KAMIL
 
-% Build OFDM frame - join data and pilots - ADAM
-
+% Build OFDM frame - join data and pilots - KAMIL
+% signal = 
 
 %% ========================================================================
 % OFDM Simulation - Channel 
@@ -65,23 +67,23 @@ addpath("utils/");
 % % Compensate frequency offset - ADAM
 % signal = compensate_frequency_offset(config, signal, ferror);
 
-% extract OFDM symbols - KAMIL
+% extract OFDM symbols - PIOTR
 
 % remove GI - PIOTR
 
-% OFDM demodulator  - ADAM
+% OFDM demodulator  - PIOTR
 
-% extract subcarriers - KAMIL
+% extract subcarriers - PIOTR
 
 % estimate channel - PIOTR
 
 % interpolate channel - PIOTR
 
-% equalize symbols - KAMIL
+% equalize symbols - PIOTR
 
-% qam demodulator - KAMIL
+% qam demodulator - PIOTR
 
 % get payload back - ADAM
-get_payload_rx(config, payload);
+% get_payload_rx(config, payload);
 
 
