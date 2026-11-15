@@ -18,28 +18,42 @@ addpath("utils/");
 % OFDM Simulation - Transmitter 
 % =========================================================================
 
-% Load the payload - ADAM
-% [payload, config] = get_payload_tx(config);
+% Load the payload (incl. zero-byte padding and scrambling) - ADAM / KAMIL
+[payload, config] = get_payload_tx(config);
 
 % Divide the bitstream into groups of bits for QAM modulation - KAMIL
-% payload = split_payload(payload, config);
+bit_groups = split_payload(config, payload.bits);
 
-% QAM modulator (can be one with previous) - KAMIL
+% QAM modulator - KAMIL
+data_symbols = qam_modulate(config, bit_groups);
+
+% Pilot values (shared with RX) - KAMIL
+pilots = generate_pilots(config);
+
+% Time-frequency grid: data + pilots on used subcarriers - KAMIL
+grid = map_resource_grid(config, data_symbols, pilots);
 
 % =======================================
 
-% Insert subcarriers - KAMIL
+% Insert zero subcarriers (frequency guard bands) - KAMIL
+spectrum = insert_null_subcarriers(config, grid);
 
-% Upsampling - KAMIL
+% Upsampling (zero padding of the spectrum) - KAMIL
+spectrum_os = oversample_spectrum(config, spectrum);
 
-% IFFT with shift (ifft(fftshift());) - KAMIL
+% IFFT with shift: ifft(spectrum_shift(X)) - KAMIL
+symbols_t = ofdm_modulate(config, spectrum_os);
 
-% Add Guard Inverval  - KAMIL
+% Add Guard Interval - KAMIL
+symbols_gi = add_guard_interval(config, symbols_t);
 
-% insert pilots - pilot symbols - KAMIL
+% (pilots are inserted above, in map_resource_grid - before the IFFT)
 
-% Build OFDM frame - join data and pilots - KAMIL
-% signal = 
+% Synchronization preamble [GI; A; A] - KAMIL
+preamble = generate_preamble(config);
+
+% Build OFDM frame - preamble + data symbols, column vector - KAMIL
+signal = build_frame(config, preamble, symbols_gi);
 
 %% ========================================================================
 % OFDM Simulation - Channel 
